@@ -1,0 +1,91 @@
+{
+  "infrastructure": {
+    "submit_node": {
+      "ip_address": "192.168.104.100"
+    },
+    "data_node": {
+      "ip_address": "192.168.104.200"
+    },
+    "normal_router": {
+      "ip_address_fabric": "192.168.102.250",
+      "ip_address_chameleon": "192.168.100.250"
+    },
+    "lossy_router": {
+      "ip_address_fabric": "192.168.103.250",
+      "ip_address_chameleon": "192.168.101.250"
+    },
+    "chameleon_nodes": {
+      "poseidon-worker-1": {
+        "cores": 48,
+        "ram": 192,
+        "ip_address": "192.168.100.10",
+        "username": "poseidon",
+        "key_filename": "~/.ssh/id_rsa"
+      },
+      "poseidon-worker-2": {
+        "cores": 48,
+        "ram": 192,
+        "ip_address": "192.168.100.11",
+        "username": "poseidon",
+        "key_filename": "~/.ssh/id_rsa"
+      }
+    }
+  },
+  "experiments": [
+    {
+      "workflow": "casa-nowcast-small",
+      "type": "normal",
+      "number_of_runs": 40,
+      "number_of_anomaly_workers": [],
+      "condor_config": {
+        "cores": 4,
+        "ram": 16,
+        "network_limit": 1000
+      }
+    },
+    {
+      "workflow": "casa-nowcast-small",
+      "type": "cpu_2",
+      "number_of_runs": 10,
+      "number_of_anomaly_workers": [2,5,10,15],
+      "condor_config": {
+        "cores": 4,
+        "ram": 16,
+        "network_limit": 1000
+      }
+    },
+    {
+      "workflow": "casa-nowcast-small",
+      "type": "cpu_3",
+      "number_of_runs": 10,
+      "number_of_anomaly_workers": [2,5,10,15],
+      "condor_config": {
+        "cores": 4,
+        "ram": 16,
+        "network_limit": 1000
+      }
+    },
+    {
+      "workflow": "casa-nowcast-small",
+      "type": "hdd_5",
+      "number_of_runs": 10,
+      "number_of_anomaly_workers": [2,5,10,15],
+      "condor_config": {
+        "cores": 4,
+        "ram": 16,
+        "network_limit": 1000
+      }
+    },
+    {
+      "workflow": "casa-nowcast-small",
+      "type": "hdd_10",
+      "number_of_runs": 10,
+      "number_of_anomaly_workers": [2,5,10,15],
+      "condor_config": {
+        "cores": 4,
+        "ram": 16,
+        "network_limit": 1000
+      }
+    }
+  ]
+}

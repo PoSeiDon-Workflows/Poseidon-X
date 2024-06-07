@@ -1,0 +1,67 @@
+{
+  "1000-genome": {
+    "dir": "/home/poseidon/workflows/1000genome-workflow",
+    "submit_dir": "/home/poseidon/workflows/1000genome-workflow/submit",
+    "script": "./run-workflow.sh"
+  },
+  "montage": {
+    "dir": "/home/poseidon/workflows/montage-workflow-v3",
+    "submit_dir": "/home/poseidon/workflows/montage-workflow-v3/submit",
+    "script": "./run-workflow.sh"
+  },
+  "predict-future-sales": {
+    "dir": "/home/poseidon/workflows/predict-future-sales-workflow",
+    "submit_dir": "/home/poseidon/workflows/predict-future-sales-workflow/submit",
+    "script": "./run-workflow.sh"
+  },
+  "casa-wind-full": {
+    "dir": "/home/poseidon/workflows/casa-wind-workflow-full",
+    "submit_dir": "/home/poseidon/workflows/casa-wind-workflow-full/submit",
+    "script": "./run-workflow.sh"
+  },
+  "casa-nowcast-full": {
+    "dir": "/home/poseidon/workflows/casa-nowcast-workflow-full",
+    "submit_dir": "/home/poseidon/workflows/casa-nowcast-workflow-full/submit",
+    "script": "./run-workflow.sh"
+  },
+  "casa-nowcast-small": {
+    "dir": "/home/poseidon/workflows/casa-nowcast-workflow-small",
+    "submit_dir": "/home/poseidon/workflows/casa-nowcast-workflow-small/submit",
+    "script": "./run-workflow.sh"
+  },
+  "variant-calling": {
+    "dir": "/home/poseidon/workflows/variant-calling-pegasus-workflow",
+    "submit_dir": "/home/poseidon/workflows/variant-calling-pegasus-workflow/submit",
+    "script": "./run-workflow.sh"
+  },
+  "pycbc-inference": {
+    "dir": "/home/poseidon/workflows/pycbc/inference/poseidon",
+    "submit_dir": "/home/poseidon/workflows/pycbc/inference/poseidon/submit",
+    "script": "./run-workflow.sh"
+  },
+  "pycbc-search": {
+    "dir": "/home/poseidon/workflows/pycbc/search/poseidon",
+    "submit_dir": "/home/poseidon/workflows/pycbc/search/poseidon/submit",
+    "script": "./run-workflow.sh"
+  },
+  "somospie": {
+    "dir": "/home/poseidon/workflows/SOMOSPIE/SOMOSPIE_pegasus/CombinedPipeline",
+    "submit_dir": "/home/poseidon/workflows/SOMOSPIE/SOMOSPIE_pegasus/CombinedPipeline/submit",
+    "script": "./run-workflow.sh"
+  },
+  "eht-difmap": {
+    "dir": "/home/poseidon/workflows/eht-pegasus/difmap",
+    "submit_dir": "/home/poseidon/workflows/eht-pegasus/difmap/submit",
+    "script": "./run-workflow.sh"
+  },
+  "eht-smili": {
+    "dir": "/home/poseidon/workflows/eht-pegasus/smili",
+    "submit_dir": "/home/poseidon/workflows/eht-pegasus/smili/submit",
+    "script": "./run-workflow.sh"
+  },
+  "eht-imaging": {
+    "dir": "/home/poseidon/workflows/eht-pegasus/eht-imaging",
+    "submit_dir": "/home/poseidon/workflows/eht-pegasus/eht-imaging/submit",
+    "script": "./run-workflow.sh"
+  }
+}

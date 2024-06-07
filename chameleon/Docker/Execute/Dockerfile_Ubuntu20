@@ -1,0 +1,95 @@
+# syntax = docker/dockerfile:1.4
+FROM htcondor/execute:10.0-ubu20.04
+
+RUN apt-get update && apt-get install -y build-essential make wget git \
+        libssl-dev uuid-dev libgpgme-dev squashfs-tools libseccomp-dev pkg-config cryptsetup-bin \
+        iperf3 htop bmon vim python3 python3-setuptools python3-dev python3-pip \
+        autoconf automake libtool libpcap-dev iproute2
+
+RUN pip3 install --upgrade pip && pip3 install matplotlib numpy pyyaml
+
+COPY network-scripts/limit_network.sh /opt/limit_network.sh
+RUN chmod +x /opt/limit_network.sh
+
+RUN cat <<EOF >> /root/config/custom.conf 
+ALLOW_PSLOT_PREEMPTION = TRUE
+
+#-- Authentication settings
+SEC_PASSWORD_FILE = /etc/condor/pool_password
+SEC_DEFAULT_AUTHENTICATION = REQUIRED
+SEC_DEFAULT_AUTHENTICATION_METHODS = FS,PASSWORD
+SEC_READ_AUTHENTICATION = OPTIONAL
+SEC_CLIENT_AUTHENTICATION = OPTIONAL
+SEC_ENABLE_MATCH_PASSWORD_AUTHENTICATION = TRUE
+DENY_WRITE = anonymous@*
+DENY_ADMINISTRATOR = anonymous@*
+DENY_DAEMON = anonymous@*
+DENY_NEGOTIATOR = anonymous@*
+DENY_CLIENT = anonymous@*
+
+EOF
+
+RUN cat <<EOF >> /root/config/custom.conf
+#-- Set num slots to be a single slot
+NUM_SLOTS = 1
+NUM_SLOTS_TYPE_1 = 1
+SLOT_TYPE_1 = 100%
+SLOT_TYPE_1_PARTITIONABLE = True
+
+EOF
+
+RUN rm /etc/condor/config.d/01-pslots.conf
+
+############################
+### INSTALL SINGULARITY ####
+############################
+
+RUN export VERSION=1.18 OS=linux ARCH=amd64 && \
+    wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
+    tar -C /opt -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
+    rm go$VERSION.$OS-$ARCH.tar.gz
+
+ENV GOPATH=/opt/go
+ENV PATH=/opt/go/bin:${PATH}:${GOPATH}/bin
+
+RUN export VERSION=3.8.7 && \
+    wget https://github.com/apptainer/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+    tar -xzf singularity-${VERSION}.tar.gz && \
+    rm singularity-${VERSION}.tar.gz && \
+    cd singularity-${VERSION} &&\
+    ./mconfig && \
+    make -C ./builddir && \
+    make -C ./builddir install
+
+############################
+### INSTALL TSTAT       ####
+############################
+
+RUN wget http://www.tstat.polito.it/download/tstat-3.1.1.tar.gz && \
+    tar -xzvf tstat-3.1.1.tar.gz &&\
+    cd tstat-3.1.1 &&\
+    ./autogen.sh &&\
+    ./configure --enable-libtstat --enable-zlib &&\
+    make && make install && \
+    mkdir /opt/tstat-logs
+
+RUN cat <<EOF >> /opt/entrypoint.sh
+#!/bin/bash
+echo "MACHINE_SPECIAL_ID = \"\$MACHINE_SPECIAL_ID\"" >> /root/config/custom.conf
+echo "STARTD_ATTRS = \\\$(STARTD_ATTRS) MACHINE_SPECIAL_ID" >> /root/config/custom.conf
+condor_store_cred -f /etc/condor/pool_password -p \$POOL_PASSWORD
+
+if [[ -z  "\${NETWORK_LIMIT}" ]]; then
+  echo "Not setting network limits in container"
+else
+  /opt/limit_network.sh \$NETWORK_LIMIT
+fi
+
+#-- Start condor
+/start.sh
+
+EOF
+
+RUN chmod +x /opt/entrypoint.sh
+ENTRYPOINT ["/opt/entrypoint.sh"]
+
