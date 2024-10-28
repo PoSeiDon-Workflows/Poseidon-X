@@ -28,6 +28,11 @@ _experiments-controllerl/*_: This folder contains the source code and the config
 
 _poseidon-chameleon-fabric-setup.ipynb_: This Jupyter Nodebook contains step by step instruction of how to recreate Poseidon X.
 
+
+Creating A Dev Env
+--------------------
+If you need a Dev environment that is able to programmatically deploy to both Fabric and Chameleon you can use the environment offered in this repo: https://github.com/PoSeiDon-Workflows/fabric-testbed
+
 Creating An SSH Key
 --------------------
 To allow the nodes to communicate with each other during the workflow experiments you need to create a passwordless ssh-key
