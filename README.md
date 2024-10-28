@@ -18,11 +18,11 @@ _chameleon/chameleon-worker-gpu-from-scratch.sh_: This script installs all the p
 
 _chameleon/Docker/Execute/*_: These Docker recipes can be used to build Poseidon's Executor Docker container.
 
-_farbric/fabric-submit.sh: This script prepares a submit node that runs on a Fabric VM instance.
+_farbric/fabric-submit.sh_: This script prepares a submit node that runs on a Fabric VM instance.
 
-_farbric/fabric-data.sh: This script prepares a data node with HTTP that runs on a Fabric VM instance.
+_farbric/fabric-data.sh_: This script prepares a data node with HTTP that runs on a Fabric VM instance.
 
-_farbric/fabric-router.sh: This script prepares a router node that runs on a Fabric VM instance.
+_farbric/fabric-router.sh_: This script prepares a router node that runs on a Fabric VM instance.
 
 _experiments-controllerl/*_: This folder contains the source code and the config files of Poseidon's Experiment Controller.
 
